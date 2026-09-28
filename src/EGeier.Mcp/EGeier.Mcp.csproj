@@ -24,4 +24,15 @@
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
+  <!-- Packs .mcp/server.json with the actual package version filled in. -->
+  <Target Name="PackMcpServerJson" BeforeTargets="_GetPackageFiles">
+    <PropertyGroup>
+      <_McpServerJson>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)/.mcp/server.json').Replace('0.0.0-local', '$(PackageVersion)'))</_McpServerJson>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(IntermediateOutputPath)server.json" Lines="$(_McpServerJson)" Overwrite="true" WriteOnlyWhenDifferent="true" />
+    <ItemGroup>
+      <None Include="$(IntermediateOutputPath)server.json" Pack="true" PackagePath=".mcp/" />
+    </ItemGroup>
+  </Target>
+
 </Project>

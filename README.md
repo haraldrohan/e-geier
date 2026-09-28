@@ -1,5 +1,7 @@
 # E-Geier
 
+[![NuGet EGeier.Net](https://img.shields.io/nuget/v/EGeier.Net?label=EGeier.Net)](https://www.nuget.org/packages/EGeier.Net) [![NuGet EGeier.Mcp](https://img.shields.io/nuget/v/EGeier.Mcp?label=EGeier.Mcp)](https://www.nuget.org/packages/EGeier.Mcp) [![CI](https://github.com/haraldrohan/e-geier/actions/workflows/ci.yml/badge.svg)](https://github.com/haraldrohan/e-geier/actions/workflows/ci.yml)
+
 **Wo tanke ich in der Nähe von Mödling am günstigsten Diesel?** – E-Geier lässt deinen KI-Assistenten diese Frage beantworten.
 
 E-Geier ist eine .NET-Bibliothek und ein lokaler [MCP](https://modelcontextprotocol.io/)-Server für die öffentlichen APIs der E-Control Austria. Den Anfang macht der **Spritpreisrechner**; das Ladestellenverzeichnis für E-Autos soll folgen.
@@ -40,7 +42,7 @@ Kraftstoffe: `diesel`, `super` (Super 95) und `cng` (Erdgas). Deutsche und engli
 
 Öffne *Einstellungen → Entwickler → Konfiguration bearbeiten* und ergänze `claude_desktop_config.json`:
 
-**Über NuGet** (sobald veröffentlicht; `dnx` ist ab dem .NET 10 SDK dabei):
+**Über NuGet** (`dnx` ist ab dem .NET 10 SDK dabei):
 
 ```json
 {
