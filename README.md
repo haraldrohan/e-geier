@@ -164,10 +164,6 @@ EGEIER_LIVE_TESTS=1 dotnet test --project tests/EGeier.IntegrationTests  # gegen
 
 Ohne `EGEIER_LIVE_TESTS=1` werden die Live-Tests übersprungen.
 
-## Abgrenzung
-
-Es gibt bereits eine Home-Assistant-Integration (Python), einen älteren Ruby-Wrapper und einen kostenpflichtigen Scraper. E-Geier ist, soweit bekannt, die erste .NET-Bibliothek und der erste freie MCP-Server auf Basis der offiziellen API.
-
 ## Datenquellen und Lizenzen
 
 - Spritpreise: [Spritpreisrechner der E-Control Austria](https://www.e-control.at/spritpreisrechner), öffentliche API
