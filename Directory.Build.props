@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+
+    <Version>0.1.0</Version>
+    <Authors>Harald Rohan</Authors>
+    <Copyright>Copyright (c) 2026 Harald Rohan</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/haraldrohan/e-geier</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/haraldrohan/e-geier</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>e-control;spritpreisrechner;spritpreise;fuel-prices;austria;oesterreich;mcp</PackageTags>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+</Project>

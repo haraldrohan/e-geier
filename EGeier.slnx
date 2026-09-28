@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EGeier.Mcp/EGeier.Mcp.csproj" />
+    <Project Path="src/EGeier/EGeier.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EGeier.IntegrationTests/EGeier.IntegrationTests.csproj" />
+    <Project Path="tests/EGeier.Tests/EGeier.Tests.csproj" />
+  </Folder>
+</Solution>

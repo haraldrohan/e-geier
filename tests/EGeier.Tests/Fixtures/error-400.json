@@ -1,0 +1,1 @@
+{"uuid":"3d7d04d0-72e0-44f0-9b60-19bacba3f513","errors":["latitude should be of type java.lang.Double"],"exceptionMessage":"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Double'","name":"BAD_REQUEST","code":"SPE_G01"}

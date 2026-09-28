@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      live:
+        description: Also run live tests against the real API
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Build
+        run: dotnet build -c Release
+
+      - name: Unit tests
+        run: dotnet test --project tests/EGeier.Tests -c Release --no-build
+
+      - name: Live tests
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.live }}
+        env:
+          EGEIER_LIVE_TESTS: "1"
+        run: dotnet test --project tests/EGeier.IntegrationTests -c Release --no-build
+
+      - name: Pack
+        run: dotnet pack -c Release --no-build -o artifacts
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: artifacts/*.nupkg
