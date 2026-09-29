@@ -1,5 +1,5 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.haraldrohan/e-geier",
   "title": "E-Geier",
   "description": "Cheapest fuel prices in Austria from the public E-Control Spritpreisrechner API. Unofficial.",

@@ -7,7 +7,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
 
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>Harald Rohan</Authors>
     <Copyright>Copyright (c) 2026 Harald Rohan</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>

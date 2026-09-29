@@ -1,5 +1,7 @@
 # E-Geier
 
+<!-- mcp-name: io.github.haraldrohan/e-geier -->
+
 [![NuGet EGeier.Net](https://img.shields.io/nuget/v/EGeier.Net?label=EGeier.Net)](https://www.nuget.org/packages/EGeier.Net) [![NuGet EGeier.Mcp](https://img.shields.io/nuget/v/EGeier.Mcp?label=EGeier.Mcp)](https://www.nuget.org/packages/EGeier.Mcp) [![CI](https://github.com/haraldrohan/e-geier/actions/workflows/ci.yml/badge.svg)](https://github.com/haraldrohan/e-geier/actions/workflows/ci.yml)
 
 **Wo tanke ich in der Nähe von Mödling am günstigsten Diesel?** – E-Geier lässt deinen KI-Assistenten diese Frage beantworten.
