@@ -33,15 +33,23 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 });
 
 // Keeps a single client from exhausting the upstream APIs (Nominatim allows one request per second in total).
+// Behind a CDN such as Cloudflare, set RateLimit:ClientIpHeader (e.g. "CF-Connecting-IP") so that clients are
+// told apart; only do so if the origin is reachable exclusively through that CDN, as the header can be forged.
 var permitsPerMinute = builder.Configuration.GetValue("RateLimit:PermitsPerMinute", 30);
+var clientIpHeader = builder.Configuration["RateLimit:ClientIpHeader"];
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
         RateLimitPartition.GetFixedWindowLimiter(
-            context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            ClientKey(context),
             _ => new FixedWindowRateLimiterOptions { PermitLimit = permitsPerMinute, Window = TimeSpan.FromMinutes(1) }));
 });
+
+string ClientKey(HttpContext context) =>
+    clientIpHeader is { Length: > 0 } && context.Request.Headers[clientIpHeader] is [{ Length: > 0 } ip, ..]
+        ? ip
+        : context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
 
 var app = builder.Build();
 
