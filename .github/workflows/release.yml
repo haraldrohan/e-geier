@@ -1,18 +1,25 @@
 name: Release
 
-# Builds, tests and packs EGeier.Net and EGeier.Mcp when a version tag (v1.2.3) is pushed, and
-# attaches the packages to a GitHub release. Upload the .nupkg files from the release to
-# nuget.org by hand (https://www.nuget.org/packages/manage/upload).
+# On a version tag (v1.2.3): build, test and pack EGeier.Net and EGeier.Mcp, attach the packages to a
+# GitHub release, then push them to nuget.org via NuGet Trusted Publishing (no long-lived API key).
+# The publish job can also be started by hand for an existing release. The nuget.org Trusted Publishing
+# policy is bound to this file name, so keep the push in release.yml.
 
 on:
   push:
     tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to publish to nuget.org, e.g. v0.1.2
+        required: true
 
 permissions:
   contents: read
 
 jobs:
   release:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write # create the GitHub release
@@ -39,3 +46,35 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh release create "$GITHUB_REF_NAME" artifacts/*.nupkg artifacts/*.snupkg --title "E-Geier $VERSION" --generate-notes
+
+  publish:
+    needs: release
+    if: always() && (needs.release.result == 'success' || (github.event_name == 'workflow_dispatch' && needs.release.result == 'skipped'))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # NuGet Trusted Publishing
+    env:
+      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Download packages from the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "*.nupkg" --pattern "*.snupkg" --dir artifacts
+
+      - name: NuGet login
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      - name: Push to nuget.org
+        run: >
+          dotnet nuget push "artifacts/*.nupkg"
+          --api-key "${{ steps.login.outputs.NUGET_API_KEY }}"
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
