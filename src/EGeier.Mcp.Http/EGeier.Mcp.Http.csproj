@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>EGeier.Mcp</RootNamespace>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <ContainerRepository>e-geier</ContainerRepository>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EGeier\EGeier.csproj" />
+    <!-- The tools are shared with the stdio server. -->
+    <Compile Include="..\EGeier.Mcp\SpritTools.cs" Link="SpritTools.cs" />
+    <Compile Include="..\EGeier.Mcp\RegionDirectory.cs" Link="RegionDirectory.cs" />
+  </ItemGroup>
+
+</Project>
