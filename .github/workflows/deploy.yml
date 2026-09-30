@@ -1,0 +1,86 @@
+name: Deploy
+
+# Builds the remote MCP server (src/EGeier.Mcp.Http) as a container image, pushes it to
+# ghcr.io/haraldrohan/e-geier and rolls it out to Azure Container Apps.
+#
+# Azure access uses OpenID Connect via a managed identity whose federated credential trusts
+# this repository's "production" environment (no stored password). Repository variables:
+#   AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_SUBSCRIPTION_ID, AZURE_RESOURCE_GROUP, AZURE_CONTAINER_APP
+
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      packages: write # push to ghcr.io
+      id-token: write # Azure login via OIDC
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Image tag
+        run: |
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            echo "TAG=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+            echo "VERSION_ARG=-p:Version=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+          else
+            echo "TAG=sha-${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+            echo "VERSION_ARG=" >> "$GITHUB_ENV"
+          fi
+
+      - name: Unit tests
+        run: dotnet test --project tests/EGeier.Tests -c Release
+
+      - name: Build and push image
+        env:
+          SDK_CONTAINER_REGISTRY_UNAME: ${{ github.actor }}
+          SDK_CONTAINER_REGISTRY_PWORD: ${{ github.token }}
+        run: |
+          dotnet publish src/EGeier.Mcp.Http -c Release -t:PublishContainer \
+            -p:ContainerRegistry=ghcr.io \
+            -p:ContainerImageTags="\"$TAG;latest\"" \
+            $VERSION_ARG
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Roll out
+        run: |
+          az containerapp update \
+            --name "${{ vars.AZURE_CONTAINER_APP }}" \
+            --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" \
+            --image "ghcr.io/haraldrohan/e-geier:$TAG" \
+            --only-show-errors -o none
+          az containerapp ingress update \
+            --name "${{ vars.AZURE_CONTAINER_APP }}" \
+            --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" \
+            --target-port 8080 \
+            --only-show-errors -o none
+
+      - name: Smoke test
+        run: |
+          FQDN=$(az containerapp show --name "${{ vars.AZURE_CONTAINER_APP }}" --resource-group "${{ vars.AZURE_RESOURCE_GROUP }}" --query properties.configuration.ingress.fqdn -o tsv)
+          for i in $(seq 1 30); do
+            if curl -fsS "https://$FQDN/health"; then echo; echo "Deployed to https://$FQDN"; exit 0; fi
+            sleep 10
+          done
+          echo "Health check failed"; exit 1
