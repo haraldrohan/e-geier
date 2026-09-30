@@ -19,6 +19,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="EGeier.Tests" />
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

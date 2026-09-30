@@ -15,6 +15,7 @@
     <RepositoryUrl>https://github.com/haraldrohan/e-geier</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageTags>e-control;spritpreisrechner;spritpreise;fuel-prices;austria;oesterreich;mcp</PackageTags>
     <IsPackable>false</IsPackable>
     <IncludeSymbols>true</IncludeSymbols>

@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/haraldrohan/e-geier/main/assets/icon.png" alt="" width="96" align="right">
+
 # E-Geier
 
 <!-- mcp-name: io.github.haraldrohan/e-geier -->

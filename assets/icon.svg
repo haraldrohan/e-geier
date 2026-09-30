@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <title>E-Geier</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#11697C"/>
+      <stop offset="1" stop-color="#0A3D4A"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- fuel drop -->
+  <path d="M256 56 C 214 124 118 232 118 322 A 138 138 0 0 0 394 322 C 394 232 298 124 256 56 Z" fill="#F5B700"/>
+  <!-- vulture in profile, facing left -->
+  <g fill="#0A3D4A">
+    <!-- feather ruff: scalloped collar -->
+    <path d="M178 400
+             C 176 380 192 366 208 370 C 212 352 234 344 248 356
+             C 256 340 282 340 290 356 C 304 344 326 352 330 370
+             C 346 366 360 380 356 400
+             C 346 430 306 448 268 448 C 228 448 190 430 178 400 Z"/>
+    <!-- neck -->
+    <path d="M238 366 C 234 340 238 316 250 298 L 300 306 C 300 330 296 350 290 368 Z"/>
+    <!-- head -->
+    <ellipse cx="274" cy="282" rx="50" ry="42"/>
+    <!-- hooked beak, attached to the head -->
+    <path d="M250 262
+             C 222 258 190 262 172 280
+             C 156 296 156 322 168 334
+             C 174 340 184 338 184 330
+             C 180 316 190 306 206 306
+             C 226 306 244 304 256 300 Z"/>
+  </g>
+  <!-- eye -->
+  <circle cx="268" cy="274" r="10" fill="#F5B700"/>
+</svg>

@@ -22,6 +22,7 @@
     <ProjectReference Include="..\EGeier\EGeier.csproj" />
     <InternalsVisibleTo Include="EGeier.Tests" />
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <!-- Packs .mcp/server.json with the actual package version filled in. -->
