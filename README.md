@@ -6,7 +6,7 @@
 
 **Wo tanke ich in der Nähe von Mödling am günstigsten Diesel?** – E-Geier lässt deinen KI-Assistenten diese Frage beantworten.
 
-E-Geier ist eine .NET-Bibliothek und ein lokaler [MCP](https://modelcontextprotocol.io/)-Server für die öffentlichen APIs der E-Control Austria. Den Anfang macht der **Spritpreisrechner**; das Ladestellenverzeichnis für E-Autos soll folgen.
+E-Geier ist eine .NET-Bibliothek und ein [MCP](https://modelcontextprotocol.io/)-Server für die öffentlichen APIs der E-Control Austria – zum Selbst-Installieren oder direkt nutzbar unter `https://e-geier.aicodelabs.dev/mcp`. Den Anfang macht der **Spritpreisrechner**; das Ladestellenverzeichnis für E-Autos soll folgen.
 
 > **Warum „E-Geier“?** Der Geier kreist geduldig über der Landschaft und stürzt sich dann zielsicher auf das günstigste Angebot. Das „E“ steht für Energie – Sprit heute, Strom morgen. Mit Bindestrich, bitte: Wir sind kein „Egeier“. 🦅⛽
 
@@ -19,8 +19,9 @@ E-Geier ist eine .NET-Bibliothek und ein lokaler [MCP](https://modelcontextproto
 |---|---|
 | `EGeier.Net` | Bibliothek: Client für die Spritpreisrechner-API, Geocoding über OpenStreetMap Nominatim |
 | `EGeier.Mcp` | MCP-Server (stdio), der lokal bei dir läuft |
+| `https://e-geier.aicodelabs.dev/mcp` | Derselbe MCP-Server, gehostet – für claude.ai, die Claude-Apps und andere Clients ohne lokale Installation |
 
-E-Geier ist ein reines Open-Source-Hobbyprojekt: kein gehosteter Dienst, keine Zugangsdaten, keine API-Schlüssel. Alles läuft auf deinem Rechner.
+E-Geier ist ein Open-Source-Hobbyprojekt: keine Anmeldung, keine Zugangsdaten, keine API-Schlüssel. Der gehostete Server wird privat und nicht kommerziell betrieben, ohne Zusage zu Verfügbarkeit.
 
 ## MCP-Server
 
@@ -36,11 +37,24 @@ Alle Werkzeuge lesen nur.
 
 Kraftstoffe: `diesel`, `super` (Super 95) und `cng` (Erdgas). Deutsche und englische Bezeichnungen wie „Benzin“ oder „petrol“ funktionieren auch.
 
-### Voraussetzungen
+### Ohne Installation: gehosteter Server
+
+In **claude.ai** unter *Einstellungen → Connectors → Benutzerdefinierten Connector hinzufügen*:
+
+- Name: `E-Geier`
+- URL: `https://e-geier.aicodelabs.dev/mcp`
+
+Keine Anmeldung nötig. Der Connector steht danach auch in den Claude-Apps für iOS und Android zur Verfügung. Andere Clients, die entfernte MCP-Server unterstützen (Streamable HTTP), verwenden dieselbe URL.
+
+Pro Nutzer sind derzeit 30 Anfragen pro Minute erlaubt.
+
+### Selbst installieren
+
+#### Voraussetzungen
 
 [.NET 10 SDK oder Runtime](https://dotnet.microsoft.com/download/dotnet/10.0).
 
-### Einrichtung in Claude Desktop
+#### Einrichtung in Claude Desktop
 
 Öffne *Einstellungen → Entwickler → Konfiguration bearbeiten* und ergänze `claude_desktop_config.json`:
 
@@ -98,7 +112,7 @@ Danach Claude Desktop neu starten. Andere MCP-fähige Clients (VS Code, Claude C
 claude mcp add e-geier -- dnx EGeier.Mcp --yes
 ```
 
-### Konfiguration (optional)
+#### Konfiguration (optional)
 
 Es ist nichts zu konfigurieren. Wer die Geocoding-Anfragen mit einer Kontaktadresse versehen will (von OpenStreetMap bei häufiger Nutzung empfohlen), setzt eine Umgebungsvariable:
 
@@ -167,6 +181,15 @@ EGEIER_LIVE_TESTS=1 dotnet test --project tests/EGeier.IntegrationTests  # gegen
 ```
 
 Ohne `EGEIER_LIVE_TESTS=1` werden die Live-Tests übersprungen.
+
+## Datenschutz
+
+Gilt für den gehosteten Server `https://e-geier.aicodelabs.dev/mcp`. Beim selbst installierten Server gehen dieselben Anfragen direkt von deinem Rechner aus.
+
+- **Was verarbeitet wird:** nur die Angaben eines Werkzeug-Aufrufs, also Ort oder Adresse, Kraftstoff und Region. E-Geier erhält keine Chatverläufe, keine Konto- oder Profildaten.
+- **Weitergabe:** Ort oder Adresse gehen an [OpenStreetMap Nominatim](https://osmfoundation.org/wiki/Privacy_Policy), um Koordinaten zu ermitteln. Koordinaten bzw. Regionscode gehen an die Spritpreisrechner-API der E-Control Austria.
+- **Speicherung:** Keine Datenbank, keine Cookies, kein Tracking. Geocoding-Ergebnisse werden bis zu 24 Stunden im Arbeitsspeicher zwischengespeichert, IP-Adressen nur für die Anfragebegrenzung für eine Minute. Nach einem Neustart ist alles weg. E-Geier legt keine dauerhaften Protokolle an. Der Hosting-Anbieter (Microsoft Azure, Region Österreich Ost) erfasst technische Betriebsdaten.
+- **Kontakt:** [GitHub Issues](https://github.com/haraldrohan/e-geier/issues)
 
 ## Datenquellen und Lizenzen
 

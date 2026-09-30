@@ -23,6 +23,12 @@
       ]
     }
   ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://e-geier.aicodelabs.dev/mcp"
+    }
+  ],
   "repository": {
     "url": "https://github.com/haraldrohan/e-geier",
     "source": "github"
