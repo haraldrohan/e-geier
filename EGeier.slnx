@@ -1,6 +1,5 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/EGeier.Mcp.Http/EGeier.Mcp.Http.csproj" />
     <Project Path="src/EGeier.Mcp/EGeier.Mcp.csproj" />
     <Project Path="src/EGeier/EGeier.csproj" />
   </Folder>
