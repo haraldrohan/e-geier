@@ -2,6 +2,11 @@
 
 # E-Geier
 
+> [!WARNING]
+> **Dieses Projekt ist eingestellt (Oktober 2026).** Die E-Control Austria hat auf Anfrage mitgeteilt, dass die Preisdaten laut Auslegung des zuständigen Ministeriums nur über [www.spritpreisrechner.at](https://www.spritpreisrechner.at) veröffentlicht werden sollen und dass es für die Nutzung der Schnittstelle durch Dritte keine Genehmigung gibt. E-Geier wird deshalb nicht weiterentwickelt, die NuGet-Pakete sind als veraltet markiert. Bitte nutze den offiziellen Spritpreisrechner.
+>
+> **This project is discontinued (October 2026).** E-Control Austria stated on request that, according to the responsible ministry, the price data is meant to be published only via [www.spritpreisrechner.at](https://www.spritpreisrechner.at) and that third-party use of the interface is not approved. E-Geier is no longer developed and the NuGet packages are deprecated. Please use the official Spritpreisrechner.
+
 [![NuGet EGeier.Net](https://img.shields.io/nuget/v/EGeier.Net?label=EGeier.Net)](https://www.nuget.org/packages/EGeier.Net) [![NuGet EGeier.Mcp](https://img.shields.io/nuget/v/EGeier.Mcp?label=EGeier.Mcp)](https://www.nuget.org/packages/EGeier.Mcp) [![CI](https://github.com/haraldrohan/e-geier/actions/workflows/ci.yml/badge.svg)](https://github.com/haraldrohan/e-geier/actions/workflows/ci.yml)
 
 **Wo tanke ich in der Nähe von Mödling am günstigsten Diesel?** – E-Geier lässt deinen KI-Assistenten diese Frage beantworten.
